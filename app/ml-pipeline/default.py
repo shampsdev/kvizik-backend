@@ -1,9 +1,5 @@
-import os, dotenv
+from ..config import FOLDER_ID, YA_GPT_API_KEY
 
-
-dotenv.load_dotenv('../../.env')
-FOLDER_ID = os.environ.get("FOLDER_ID")
-HEADER_API_KEY = os.environ.get("YA_GPT_API_KEY")
 
 # System prompt for LLM role-model
 SYS_MESSAGE = """Представь, что ты - машина, генерирующая тесты по заданному тексту.
@@ -44,5 +40,5 @@ LLM_REQUEST = {
 REQUEST_URL = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
 REQUEST_HEADERS = {
     "Content-Type": "application/json",
-    "Authorization": f"Api-Key {HEADER_API_KEY}"
+    "Authorization": f"Api-Key {YA_GPT_API_KEY}"
 }

@@ -1,4 +1,4 @@
-from extras import SYS_MESSAGE, LLM_REQUEST, REQUEST_HEADERS, REQUEST_URL
+from default import SYS_MESSAGE, LLM_REQUEST, REQUEST_HEADERS, REQUEST_URL
 from pydantic import BaseModel
 from typing import List, Dict
 import httpx
