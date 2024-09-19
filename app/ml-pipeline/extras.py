@@ -1,9 +1,9 @@
 import os, dotenv
 
 
-dotenv.load_dotenv('config.env')
+dotenv.load_dotenv('../../.env')
 FOLDER_ID = os.environ.get("FOLDER_ID")
-HEADER_API_KEY = os.environ.get("HEADER_API")
+HEADER_API_KEY = os.environ.get("YA_GPT_API_KEY")
 
 # System prompt for LLM role-model
 SYS_MESSAGE = """Представь, что ты - машина, генерирующая тесты по заданному тексту.
