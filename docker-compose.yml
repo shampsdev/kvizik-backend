@@ -1,0 +1,14 @@
+services:
+  backend:
+    build: 
+      context: .
+      target: prod
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+    volumes:
+      - sqlite_db:/app/db
+
+volumes:
+  sqlite_db:
