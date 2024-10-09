@@ -14,9 +14,8 @@ COPY . .
 
 
 FROM base AS dev
-CMD [ "uvicorn", "app.app:app", "--host", "0.0.0.0", "--reload" ]
+CMD [ "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
 
 
 FROM base AS prod
-CMD [ "uvicorn", "app.app:app", "--host", "0.0.0.0" ]
-
+CMD [ "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000" ]

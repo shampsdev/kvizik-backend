@@ -37,5 +37,5 @@ kvizik:dev
 
 ## Docker (deployment)
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
