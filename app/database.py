@@ -2,13 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from .config import SQLITE_PATH
+from .config import POSTGRES_DB_URI
 
-SQLALCHEMY_DATABASE_URL = f"sqlite:///./{SQLITE_PATH}"
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+engine = create_engine(POSTGRES_DB_URI)
 
 Base = declarative_base()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
