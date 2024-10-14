@@ -3,8 +3,6 @@ __pycache__/
 .venv
 venv
 
-# Sqlite
-sqlite.db
-
 # .env
 app/ml-pipeline/config.env
+.env
