@@ -6,16 +6,18 @@ EXPOSE 8000
 
 WORKDIR /app
 
-COPY requirements.txt .
+RUN pip install poetry
 
-RUN pip install -r requirements.txt
+COPY ./pyproject.toml .
+
+RUN poetry install
 
 COPY . .
 
 
 FROM base AS dev
-CMD [ "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
+CMD ["poetry", "run", "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
 
 
 FROM base AS prod
-CMD [ "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000" ]
+CMD ["poetry", "run", "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000" ]

@@ -5,15 +5,20 @@
 
 1. Установка пакетов
 
-`
-pip install -r requirements.txt
-`
+Установить [poetry](https://python-poetry.org/docs/#installation)
+
+```bash
+poetry install
+```
+
+
+
 
 2. Запуск
 
-`
-fastapi dev
-`
+```bash
+poetry run fastapi dev
+```
 
 3. Docs
 
