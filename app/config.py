@@ -1,14 +1,27 @@
-from os import getenv
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-POSTGRES_USER = getenv("POSTGRES_USER")
-POSTGRES_PASSWORD = getenv("POSTGRES_PASSWORD")
-POSTGRES_DB = getenv("POSTGRES_DB")
-POSTGRES_HOST = getenv("POSTGRES_HOST")
-POSTGRES_PORT = getenv("POSTGRES_PORT")
+from pydantic import PostgresDsn
+from pydantic_core import MultiHostUrl
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-POSTGRES_DB_URI = f"postgresql+psycopg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+class Settings(BaseSettings):
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_HOST: str
+    POSTGRES_PORT: int = 5432
+    POSTGRES_DB: str
+
+    @property
+    def POSTGRES_DATABASE_URI(self) -> PostgresDsn:
+        return MultiHostUrl.build(
+            scheme="postgresql+psycopg",
+            username=self.POSTGRES_USER,
+            password=self.POSTGRES_PASSWORD,
+            host=self.POSTGRES_HOST,
+            port=self.POSTGRES_PORT,
+            path=self.POSTGRES_DB,
+        )
+
+    model_config = SettingsConfigDict(env_file=".env")
+
+
+settings = Settings()  # type: ignore
