@@ -5,7 +5,7 @@ from sqlalchemy import ForeignKey, String
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.db.database import Base
+from .database import Base
 
 
 class User(Base):
@@ -40,7 +40,7 @@ class Question(Base):
     test_id: Mapped[Optional[int]] = mapped_column(ForeignKey("tests.id"))
     test: Mapped[Optional["Test"]] = relationship(back_populates="questions")
     text: Mapped[Optional[str]] = mapped_column(String(255))
-    answer: Mapped[Optional["Answer"]] = relationship(back_populates="question")
+    answers: Mapped[list["Answer"]] = relationship(back_populates="question")
 
 
 class Answer(Base):
@@ -50,6 +50,6 @@ class Answer(Base):
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
     question_id: Mapped[Optional[int]] = mapped_column(ForeignKey("questions.id"))
-    question: Mapped[Optional["Question"]] = relationship(back_populates="answer")
+    question: Mapped[Optional["Question"]] = relationship(back_populates="answers")
     text: Mapped[Optional[str]] = mapped_column(String(255))
     is_right: Mapped[Optional[bool]]

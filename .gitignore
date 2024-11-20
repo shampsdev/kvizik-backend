@@ -6,3 +6,4 @@ venv
 # .env
 app/ml-pipeline/config.env
 .env
+.vscode

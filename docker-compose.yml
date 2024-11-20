@@ -8,13 +8,26 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    environment:
+      - POSTGRES_HOST=db
   db:
     image: postgres:15
     restart: unless-stopped
+    ports:
+      - "5432:5432"
     env_file:
       - .env
     volumes:
       - psql_data:/var/lib/postgresql/data
-
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "1000:8080"
+    depends_on:
+      - db
 volumes:
   psql_data:
