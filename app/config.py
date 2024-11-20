@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int = 5432
     POSTGRES_DB: str
 
+    FOLDER_ID: str
+    YA_GPT_API_KEY: str
+
     @property
     def POSTGRES_DATABASE_URI(self) -> PostgresDsn:
         return MultiHostUrl.build(
