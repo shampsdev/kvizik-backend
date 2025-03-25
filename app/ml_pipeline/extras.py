@@ -1,9 +1,7 @@
-import os, dotenv
+from app.config import settings
 
-
-dotenv.load_dotenv('../../.env')
-FOLDER_ID = os.environ.get("FOLDER_ID")
-HEADER_API_KEY = os.environ.get("YA_GPT_API_KEY")
+FOLDER_ID = settings.FOLDER_ID
+HEADER_API_KEY = settings.YA_GPT_API_KEY
 
 # System prompt for LLM role-model
 SYS_MESSAGE = """Представь, что ты - машина, генерирующая тесты по заданному тексту.
@@ -34,15 +32,11 @@ SYS_MESSAGE = """Представь, что ты - машина, генерир�
 # Request for LLM | Need to add `"messages": List` key to complete the request
 LLM_REQUEST = {
     "modelUri": f"gpt://{FOLDER_ID}/yandexgpt/latest",
-    "completionOptions": {
-        "stream": False,
-        "temperature": 0.6,
-        "maxTokens": "1500"
-    },
+    "completionOptions": {"stream": False, "temperature": 0.6, "maxTokens": "1500"},
 }
 
 REQUEST_URL = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
 REQUEST_HEADERS = {
     "Content-Type": "application/json",
-    "Authorization": f"Api-Key {HEADER_API_KEY}"
+    "Authorization": f"Api-Key {HEADER_API_KEY}",
 }
