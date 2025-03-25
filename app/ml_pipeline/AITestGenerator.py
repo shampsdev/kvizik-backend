@@ -70,12 +70,14 @@ class AITestGenerator:
         ]
 
         try:
+            logging.log(logging.INFO, users_prompt)
             response = httpx.post(
                 url=REQUEST_URL, headers=REQUEST_HEADERS, json=LLM_REQUEST
             )
 
         # If failed to send request using httpx
         except Exception as e:
+            logging.log(logging.ERROR, str(e))
             raise httpx.RequestError(f"Failed to send POST response. Error: {e}")
 
         # Something went wrong with LLM Service
