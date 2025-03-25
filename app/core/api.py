@@ -1,12 +1,15 @@
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
-from .database import get_db
-from .models import Test, Question, Answer, User
-from .auth import verify_token
-from .jwt import create_access_token
-from .schemas import QuizRequest, QuizResultRequest
+
 from app.ml_pipeline.AITestGenerator import AITestGenerator
-import uuid
+
+from .auth import verify_token
+from .database import get_db
+from .jwt import create_access_token
+from .models import Answer, Question, Test, User
+from .schemas import QuizRequest, QuizResultRequest
 
 router = APIRouter()
 
@@ -66,9 +69,19 @@ def generate_quiz(
     return {"test_id": str(test.id)}
 
 
+import uuid
+
+from fastapi import HTTPException
+
+
 @router.get("/quiz/{test_id}", dependencies=[Depends(verify_token)])
 def get_quiz(test_id: str, db: Session = Depends(get_db)):
-    test_id_uuid = uuid.UUID(test_id)
+    try:
+        print(test_id)
+        test_id_uuid = uuid.UUID(test_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid test_id format")
+
     test = (
         db.query(Test)
         .options(joinedload(Test.questions).joinedload(Question.answers))
@@ -131,9 +144,11 @@ def submit_quiz_results(
     result = {
         "correct_answers": correct_answers_count,
         "total_questions": total_questions,
-        "score": (correct_answers_count / total_questions) * 100
-        if total_questions > 0
-        else 0,
+        "score": (
+            (correct_answers_count / total_questions) * 100
+            if total_questions > 0
+            else 0
+        ),
     }
 
     return result
