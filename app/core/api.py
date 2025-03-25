@@ -39,7 +39,9 @@ def generate_quiz(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to generate test: {e}")
 
-    test = Test(creator_id=user_id, text=request.text, generated=ai_test.dict())
+    test = Test(creator_id=user_id, text=request.text, generated=ai_test.model_dump())
+    print(ai_test.model_dump())
+    print(Test.generated)
 
     db.add(test)
     db.commit()
@@ -67,11 +69,6 @@ def generate_quiz(
 
     db.commit()
     return {"test_id": str(test.id)}
-
-
-import uuid
-
-from fastapi import HTTPException
 
 
 @router.get("/quiz/{test_id}", dependencies=[Depends(verify_token)])

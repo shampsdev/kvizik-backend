@@ -83,6 +83,8 @@ class AITestGenerator:
                 f"Incorrect POST request with text: {response.text}"
             )
 
+        print(response.text)
+
         json_llm_response = json.loads(response.text)["result"]["alternatives"][0][
             "message"
         ]["text"]
