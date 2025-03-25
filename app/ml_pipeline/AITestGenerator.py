@@ -12,6 +12,8 @@ from app.ml_pipeline.extras import (
     SYS_MESSAGE,
 )
 
+logging.basicConfig(level=logging.INFO)
+
 
 # A model for a single question
 class TestQuestion(BaseModel):
@@ -88,11 +90,11 @@ class AITestGenerator:
 
         logging.log(logging.INFO, response.text)
 
-        llm_answer = json.loads(
-            json.loads(response.text)["result"]["alternatives"][0]["message"][
-                "text"
-            ].strip("`")
-        )
+        json_llm_response = json.loads(response.text)["result"]["alternatives"][0][
+            "message"
+        ]["text"]
+        cleaned_json_llm_response = json_llm_response.replace("`", "")
+        llm_answer = json.loads(cleaned_json_llm_response)["test"]
 
         return AITest(**llm_answer)
 
