@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     FOLDER_ID: str
     YA_GPT_API_KEY: str
 
+    QUESTIONS_AMOUNT: int = 5
+
     @property
     def POSTGRES_DATABASE_URI(self) -> PostgresDsn:
         return MultiHostUrl.build(

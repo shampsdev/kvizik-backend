@@ -88,9 +88,8 @@ class AITestGenerator:
         json_llm_response = json.loads(response.text)["result"]["alternatives"][0][
             "message"
         ]["text"]
-        llm_answer = json.loads(json_llm_response[3 : len(json_llm_response) - 3])[
-            "test"
-        ]  # Slicing removes compulsory JSON formating
+        cleaned_json_llm_response = json_llm_response.replace("`", "")
+        llm_answer = json.loads(cleaned_json_llm_response)["test"]
 
         return AITest(**llm_answer)
 

@@ -3,6 +3,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 
+from app.config import settings
 from app.ml_pipeline.AITestGenerator import AITestGenerator
 
 from .auth import verify_token
@@ -24,7 +25,11 @@ def create_user_endpoint(db: Session = Depends(get_db)):
     return {"auth_token": token}
 
 
-test_generator = AITestGenerator().set_difficulty("easy").set_questions_amount(2)
+test_generator = (
+    AITestGenerator()
+    .set_difficulty("easy")
+    .set_questions_amount(settings.QUESTIONS_AMOUNT)
+)
 
 
 @router.post("/quiz/generate")
