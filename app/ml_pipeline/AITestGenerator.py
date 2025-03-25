@@ -5,6 +5,7 @@ from typing import Dict, List
 import httpx
 from pydantic import BaseModel
 
+from app.config import settings
 from app.ml_pipeline.extras import (
     LLM_REQUEST,
     REQUEST_HEADERS,
@@ -12,7 +13,7 @@ from app.ml_pipeline.extras import (
     SYS_MESSAGE,
 )
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=settings.LOG_LEVEL)
 
 
 # A model for a single question
