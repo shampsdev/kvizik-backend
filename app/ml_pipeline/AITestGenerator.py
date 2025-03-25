@@ -85,11 +85,11 @@ class AITestGenerator:
 
         print(response.text)
 
-        json_llm_response = json.loads(response.text)["result"]["alternatives"][0][
-            "message"
-        ]["text"]
-        cleaned_json_llm_response = json_llm_response.replace("`", "")
-        llm_answer = json.loads(cleaned_json_llm_response)["test"]
+        llm_answer = json.loads(
+            json.loads(response.text)["result"]["alternatives"][0]["message"][
+                "text"
+            ].strip("`")
+        )
 
         return AITest(**llm_answer)
 
