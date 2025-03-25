@@ -86,11 +86,12 @@ class AITestGenerator:
 
         logging.log(logging.INFO, response.text)
 
-        llm_answer = json.loads(
-            json.loads(response.text)["result"]["alternatives"][0]["message"][
-                "text"
-            ].strip("`")
-        )
+        json_llm_response = json.loads(response.text)["result"]["alternatives"][0][
+            "message"
+        ]["text"]
+        llm_answer = json.loads(json_llm_response[3 : len(json_llm_response) - 3])[
+            "test"
+        ]  # Slicing removes compulsory JSON formating
 
         return AITest(**llm_answer)
 

@@ -77,7 +77,6 @@ def generate_quiz(
 @router.get("/quiz/{test_id}", dependencies=[Depends(verify_token)])
 def get_quiz(test_id: str, db: Session = Depends(get_db)):
     try:
-        print(test_id)
         test_id_uuid = uuid.UUID(test_id)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid test_id format")
