@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     YA_GPT_API_KEY: str
 
     QUESTIONS_AMOUNT: int = 5
+    LOG_LEVEL: str = "DEBUG"
 
     @property
     def POSTGRES_DATABASE_URI(self) -> PostgresDsn:
