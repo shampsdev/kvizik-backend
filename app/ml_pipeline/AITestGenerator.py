@@ -1,8 +1,15 @@
-from .extras import SYS_MESSAGE, LLM_REQUEST, REQUEST_HEADERS, REQUEST_URL
-from pydantic import BaseModel
-from typing import List, Dict
-import httpx
 import json
+from typing import Dict, List
+
+import httpx
+from pydantic import BaseModel
+
+from app.ml_pipeline.extras import (
+    LLM_REQUEST,
+    REQUEST_HEADERS,
+    REQUEST_URL,
+    SYS_MESSAGE,
+)
 
 
 # A model for a single question
