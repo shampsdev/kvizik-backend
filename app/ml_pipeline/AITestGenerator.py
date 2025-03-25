@@ -1,4 +1,5 @@
 import json
+import logging
 from typing import Dict, List
 
 import httpx
@@ -83,7 +84,7 @@ class AITestGenerator:
                 f"Incorrect POST request with text: {response.text}"
             )
 
-        print(response.text)
+        logging.log(logging.INFO, response.text)
 
         llm_answer = json.loads(
             json.loads(response.text)["result"]["alternatives"][0]["message"][
